@@ -1,0 +1,49 @@
+version: '3.8'
+services:
+
+  # Sua aplicação Java
+  sua-aplicacao:
+    build: .
+    ports:
+      - 8080:8080 # Porta que sua aplicação expõe
+    depends_on:
+      - postgres
+      - redis
+      - kafka
+
+  # PostgreSQL
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: sua_aplicacao_db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  # Redis
+  redis:
+    image: redis:7
+
+  # Kafka
+  kafka:
+    image: bitnami/kafka:latest
+    ports:
+      - 9092:9092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      ALLOW_PLAINTEXT_LISTENER: yes
+
+  # Splunk (opcional, para coleta de logs)
+  splunk:
+    image: splunk/splunk:latest
+    ports:
+      - 8000:8000
+      - 8088:8088
+      - 8089:8089
+    volumes:
+      - ./splunk-data:/opt/splunk/var/lib/splunk
+
+volumes:
+  postgres-data:
