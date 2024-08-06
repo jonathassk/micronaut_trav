@@ -29,3 +29,7 @@
 - [https://maven.apache.org/enforcer/maven-enforcer-plugin/](https://maven.apache.org/enforcer/maven-enforcer-plugin/)
 
 
+
+docker build -t trav:1.0 .
+
+docker run -p 8080:8080 trav:1.0

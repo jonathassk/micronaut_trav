@@ -1,31 +1,47 @@
 version: '3.8'
 services:
-
-  # Sua aplicação Java
-  sua-aplicacao:
+  app: # Renomeado para "app"
+    env_file:
+      - ./.env
     build: .
     ports:
-      - 8080:8080 # Porta que sua aplicação expõe
+      - "8080:8080"
     depends_on:
-      - postgres
-      - redis
-      - kafka
+      - postgres # Adiciona a dependência do postgres
+      - kafka  # Adicione a dependência do kafka
+      - redis  # Adicione a dependência do redis
+    environment:
+      - DB_HOST=postgres #host é igual ao nome da dependencia do db
+      - DB_PORT=5432
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - KAFKA_HOST=kafka
+      - KAFKA_PORT=9092
 
-  # PostgreSQL
   postgres:
     image: postgres:15
+    ports:
+      - "5432:5432"
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: sua_aplicacao_db
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
-  # Redis
   redis:
     image: redis:7
 
-  # Kafka
+  zookeeper:
+    image: bitnami/zookeeper:latest
+    ports:
+      - 2181:2181
+    environment:
+      ALLOW_ANONYMOUS_LOGIN: "yes"
+
   kafka:
     image: bitnami/kafka:latest
     ports:
@@ -33,9 +49,10 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      ALLOW_PLAINTEXT_LISTENER: yes
+      ALLOW_PLAINTEXT_LISTENER: "yes"
+    depends_on:
+      - zookeeper
 
-  # Splunk (opcional, para coleta de logs)
   splunk:
     image: splunk/splunk:latest
     ports:
@@ -47,3 +64,4 @@ services:
 
 volumes:
   postgres-data:
+  splunk-data:
