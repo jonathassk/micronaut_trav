@@ -38,8 +38,8 @@ Isrc/test/java/com/example/java_travel_api/utils/ValidateRegisterTest.java,e/f/
 Nsrc/main/java/com/example/java_travel_api/model/register/ValidationResult.java,7/5/75fa125897f687c8663bc64b7bbc4254b4970cce
 |
 Lsrc/main/java/com/example/java_travel_api/model/register/RegisterReturn.java,0/5/05f5445c6db1e079556704e3e15869e6348bbbcd
-}
-Msrc/main/java/com/example/java_travel_api/model/errors/RegistrationError.java,3/b/3b66b6a396de72bb44ab9fe58987b27850cfe594
 :
 
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
+|
+Lsrc/test/java/com/example/java_travel_api/JavaTravelApiApplicationTests.java,2/6/26400b6269d85ca44168b8ea265cc181e0f863ca
