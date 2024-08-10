@@ -1,6 +1,7 @@
 package com.example.java_travel_api.controllers;
 
 import com.example.java_travel_api.interfaces.UserService;
+import com.example.java_travel_api.model.register.RegisterReturn;
 import com.example.java_travel_api.model.User;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -22,16 +23,14 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
+    public ResponseEntity<RegisterReturn> createUser(@Valid @RequestBody User user) {
         try {
-            userService.createUser(user);
-            return ResponseEntity.status(201).body(user); // Retorna 201 em caso de sucesso
-        } catch (DataIntegrityViolationException e) {
-        return ResponseEntity.status(400).body("Erro: Já existe um usuário com este email.");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(400).body(e.getMessage());
-        } catch (Exception e) { // Captura qualquer outra exceção inesperada
-            return ResponseEntity.status(500).body("Erro interno do servidor.");
+            RegisterReturn result = userService.createUser(user);
+            return ResponseEntity.status(result.status()).body(result);
+        } catch (DataIntegrityViolationException | IllegalArgumentException e) {
+        return ResponseEntity.status(400).body(null);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
         }
     }
 }

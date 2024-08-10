@@ -30,3 +30,16 @@ Hsrc/main/java/com/example/java_travel_api/repository/UserRepository.java,f/3/f
 dockerfile,5/5/558c49b604560afd1841f2a7b49e2f60bd1f99b3
 B
 docker-compose.yml,3/5/35b8c13cf2eb2a194eada000eb310d65aed53b2a
+u
+Esrc/main/java/com/example/java_travel_api/utils/ValidateRegister.java,9/9/9922621d9673fe9016a61d96b7f5ce5b6e299ee4
+y
+Isrc/test/java/com/example/java_travel_api/utils/ValidateRegisterTest.java,e/f/ef5ddfcbfec9981b414efe0fa92f320f5865703f
+~
+Nsrc/main/java/com/example/java_travel_api/model/register/ValidationResult.java,7/5/75fa125897f687c8663bc64b7bbc4254b4970cce
+|
+Lsrc/main/java/com/example/java_travel_api/model/register/RegisterReturn.java,0/5/05f5445c6db1e079556704e3e15869e6348bbbcd
+}
+Msrc/main/java/com/example/java_travel_api/model/errors/RegistrationError.java,3/b/3b66b6a396de72bb44ab9fe58987b27850cfe594
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302

@@ -1,4 +1,3 @@
-# Imagem base Java 21
 FROM openjdk:21-jdk-slim
 
 WORKDIR /app

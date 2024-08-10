@@ -1,4 +1,4 @@
-package com.example.java_travel_api.model;
+package com.example.java_travel_api.model.register;
 
 import org.springframework.http.HttpStatus;
 
