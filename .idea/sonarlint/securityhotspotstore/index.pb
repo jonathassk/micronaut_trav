@@ -43,3 +43,7 @@ Lsrc/main/java/com/example/java_travel_api/model/register/RegisterReturn.java,0
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
 |
 Lsrc/test/java/com/example/java_travel_api/JavaTravelApiApplicationTests.java,2/6/26400b6269d85ca44168b8ea265cc181e0f863ca
+s
+Csrc/main/java/com/example/java_travel_api/config/SecuritConfig.java,5/9/5996763604392aa626d0fc9d4b7e25469195b5a9
+t
+Dsrc/main/java/com/example/java_travel_api/config/SecurityConfig.java,a/5/a5ac489450819a341fa80881c981900bc30b5691
