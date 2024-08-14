@@ -27,19 +27,24 @@ public class UserServiceImpl implements UserService {
         RegisterReturn validationFields = validateRegister.validate(user);
         if (validationFields != null) return validationFields;
         if (userRepository.existsByEmail(user.getEmail())) return new RegisterReturn(null, "email already registered", HttpStatus.BAD_REQUEST);
-        user.setCreatedAt(LocalDateTime.now());
-        user.setUpdatedAt(LocalDateTime.now());
+        if (userRepository.existsByUsername(user.getUsername())) return new RegisterReturn(null, "username already registered", HttpStatus.BAD_REQUEST);
+        setTime(user);
         userRepository.save(user);
         return new RegisterReturn(user.getId().toString(), "user " + user.getId() + " registered",HttpStatus.CREATED);
     }
 
     @Override
-    public RegisterReturn updateUser(User user) {
+    public RegisterReturn updateUser(User user, String email) {
         Optional<User> oldUser = userRepository.findById(user.getId());
         if (oldUser.isEmpty()) return new RegisterReturn(null, "user not found", HttpStatus.NOT_FOUND);
-        user.setUpdatedAt(LocalDateTime.now());
-        user.setCreatedAt(oldUser.get().getCreatedAt());
+        if (!oldUser.get().getEmail().equals(email)) return new RegisterReturn(null, "email not match", HttpStatus.BAD_REQUEST);
+        setTime(user);
         userRepository.save(user);
-        return new RegisterReturn(user.getId().toString(), "user " + user.getId() + " updated",HttpStatus.OK);
+        return new RegisterReturn(user.getId().toString(), "user " + user.getId() + " updated", HttpStatus.OK);
+    }
+
+    private void setTime(User user) {
+        if (user.getCreatedAt() == null) user.setCreatedAt(LocalDateTime.now());
+        user.setUpdatedAt(LocalDateTime.now());
     }
 }
