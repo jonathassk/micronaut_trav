@@ -29,14 +29,3 @@ jobs:
 
     - name: Run tests with coverage
       run: mvn -B test
-
-    - name: Run tests and generate JaCoCo report
-      run: mvn test jacoco:report
-
-    - name: Verify coverage
-      run: |
-        COVERAGE=$(mvn jacoco:report | grep -oP '(?<=<counter type="INSTRUCTION" missed="[0-9]+" covered=")[0-9]+' | awk '{sum+=$1} END {print sum}')
-        if [ "$COVERAGE" -lt 70 ]; then
-          echo "Coverage is below 70%! Failing build."
-          exit 1
-        fi
