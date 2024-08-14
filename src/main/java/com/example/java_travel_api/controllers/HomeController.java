@@ -11,24 +11,4 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/")
 public class HomeController {
 
-    @GetMapping
-    public String getController() {
-        return "teste";
-    }
-
-    @PostMapping("/update")
-    public ResponseEntity<RegisterReturn> updateUser(@RequestBody User user) {
-        System.out.println(user.toString());
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(authentication);
-        return ResponseEntity.status(200).body(null);
-        //RegisterReturn result = userService.updateUser(user);
-        //return ResponseEntity.status(result.status()).body(result);
-    }
-
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
-
 }

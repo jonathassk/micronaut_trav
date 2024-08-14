@@ -36,8 +36,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public RegisterReturn updateUser(User user, String email) {
         Optional<User> oldUser = userRepository.findById(user.getId());
-        if (oldUser.isEmpty()) return new RegisterReturn(null, "user not found", HttpStatus.NOT_FOUND);
-        if (!oldUser.get().getEmail().equals(email)) return new RegisterReturn(null, "email not match", HttpStatus.BAD_REQUEST);
+        if (oldUser.isEmpty()) throw new IllegalArgumentException("user not found");
+        if (!oldUser.get().getEmail().equals(email)) throw new IllegalArgumentException("email not match");
         setTime(user);
         userRepository.save(user);
         return new RegisterReturn(user.getId().toString(), "user " + user.getId() + " updated", HttpStatus.OK);
