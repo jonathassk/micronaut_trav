@@ -27,6 +27,7 @@ public class UserController {
     public ResponseEntity<RegisterReturn> updateUser(@RequestBody User user) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            System.out.println("auth = " + authentication);
             RegisterReturn result = userService.updateUser(user);
             return ResponseEntity.status(result.status()).body(result);
         } catch (DataIntegrityViolationException | IllegalArgumentException e) {

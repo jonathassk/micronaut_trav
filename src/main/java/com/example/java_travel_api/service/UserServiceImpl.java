@@ -14,7 +14,6 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
-
     private final UserRepository userRepository;
     private final ValidateRegister validateRegister;
 
@@ -32,11 +31,6 @@ public class UserServiceImpl implements UserService {
         user.setUpdatedAt(LocalDateTime.now());
         userRepository.save(user);
         return new RegisterReturn(user.getId().toString(), "user " + user.getId() + " registered",HttpStatus.CREATED);
-    }
-
-    @Override
-    public User getUserById(Long id) {
-        return null;
     }
 
     @Override
