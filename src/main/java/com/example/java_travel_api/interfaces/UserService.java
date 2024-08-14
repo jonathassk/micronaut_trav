@@ -6,5 +6,5 @@ import com.example.java_travel_api.model.User;
 public interface UserService {
     RegisterReturn createUser(User user);
     User getUserById(Long id);
-    User updateUser(User user);
+    RegisterReturn updateUser(User user);
 }

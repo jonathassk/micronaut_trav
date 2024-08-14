@@ -2,7 +2,11 @@ package com.example.java_travel_api.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -46,6 +50,14 @@ public class User {
 
     @Column
     private int age;
+
+    @Column
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    @Column
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Travel> travels;

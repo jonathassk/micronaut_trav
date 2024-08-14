@@ -7,8 +7,6 @@
 pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
 w
 Gsrc/main/java/com/example/java_travel_api/JavaTravelApiApplication.java,d/d/dd85f3bde6ed51ed211e6a54f68803786a102965
-y
-Isrc/main/java/com/example/java_travel_api/controllers/homeController.java,2/8/28a145fd0753ee6ef9bf8fbf3be12be6f9ad20ed
 8
 app.yaml,0/c/0cf0bb82cc508190c215cbfa97023ebc538ede19
 4
@@ -43,7 +41,9 @@ Lsrc/main/java/com/example/java_travel_api/model/register/RegisterReturn.java,0
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
 |
 Lsrc/test/java/com/example/java_travel_api/JavaTravelApiApplicationTests.java,2/6/26400b6269d85ca44168b8ea265cc181e0f863ca
-s
-Csrc/main/java/com/example/java_travel_api/config/SecuritConfig.java,5/9/5996763604392aa626d0fc9d4b7e25469195b5a9
 t
 Dsrc/main/java/com/example/java_travel_api/config/SecurityConfig.java,a/5/a5ac489450819a341fa80881c981900bc30b5691
+y
+Isrc/main/java/com/example/java_travel_api/controllers/HomeController.java,c/c/cc6277827463f83607a9bd0f300b08e98c5c1443
+z
+Jsrc/main/java/com/example/java_travel_api/controllers/GuestController.java,5/7/57047a76020b862d934c151fae26617c868bb09c
