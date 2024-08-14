@@ -10,6 +10,7 @@ class JavaTravelApiApplicationTests {
 
 	@Test
 	void contextLoads() {
+		assert true;
 	}
 
 }
