@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
+
 @Entity
 @Table(name = "travels")
 @Getter
@@ -17,16 +19,17 @@ public class Travel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-
-    @JoinColumn(name = "user_id")
-    private User user;
+    @ManyToMany(mappedBy = "travels")
+    private List<User> user;
 
     @Column
     private int quantityPerson;
 
     @Column
-    private String destination;
+    private List<String> idSections;
+
+    @Column
+    private String origin;
 
     @Column
     private boolean flightIncluded;
@@ -44,22 +47,11 @@ public class Travel {
     private double dailyBudget;
 
     @Column
-    private String activities;
-
-    @Column
-    private String meals;
-
-    @Column
     private LocalDate dayStart;
 
     @Column
     private LocalDate dayReturn;
 
     @Column
-    private String cityCities;
-
-    @Column
-    private String countryCountries;
-
-
+    private String createdAt;
 }
