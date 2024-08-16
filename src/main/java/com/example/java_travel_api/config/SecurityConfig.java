@@ -22,6 +22,7 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/guests/**").permitAll()
+                    .requestMatchers("/test/**").permitAll()
                     .anyRequest().authenticated())
             .oauth2Login(Customizer.withDefaults())
             .formLogin(Customizer.withDefaults())
