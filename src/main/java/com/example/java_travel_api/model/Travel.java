@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "travels")
@@ -26,25 +28,19 @@ public class Travel {
     private int quantityPerson;
 
     @Column
-    private List<String> idSections;
-
-    @Column
-    private String origin;
+    private UUID idSections;
 
     @Column
     private boolean flightIncluded;
 
     @Column
-    private String flight;
-
-    @Column
     private boolean hotelIncluded;
 
     @Column
-    private String hotel;
+    private double budget;
 
     @Column
-    private double dailyBudget;
+    private String currency;
 
     @Column
     private LocalDate dayStart;
@@ -53,5 +49,8 @@ public class Travel {
     private LocalDate dayReturn;
 
     @Column
-    private String createdAt;
+    private boolean active;
+
+    @Column
+    private LocalDateTime createdAt;
 }
