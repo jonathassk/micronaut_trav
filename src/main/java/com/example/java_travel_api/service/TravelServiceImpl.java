@@ -3,6 +3,7 @@ package com.example.java_travel_api.service;
 import com.example.java_travel_api.interfaces.TravelService;
 import com.example.java_travel_api.model.Travel;
 import com.example.java_travel_api.model.User;
+import com.example.java_travel_api.model.travel.JsonTravelResponse;
 import com.example.java_travel_api.model.travel.TravelReq;
 import com.example.java_travel_api.repository.TravelRepository;
 import com.example.java_travel_api.repository.UserRepository;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class TravelServiceImpl implements TravelService {
@@ -28,10 +30,11 @@ public class TravelServiceImpl implements TravelService {
     @Override
     public void createTravel(TravelReq travelReq, User user) {
         Travel travel = createTravelObj(travelReq, user);
-        user.getTravels().add(travel);
-        travelRepository.save(travel);
-        userRepository.save(user);
-//      CompletableFuture<Void> sqlFuture = CompletableFuture.runAsync(() -> travelRepository.save(travel));
+
+        CompletableFuture<Void> sqlFuture = CompletableFuture.runAsync(() -> saveInSql(user, travel));
+        CompletableFuture<JsonTravelResponse> openAiTravelFuture = CompletableFuture.supplyAsync(() -> sendTravelToOpenAiApi(travel));
+        openAiTravelFuture.thenAccept(this::sendToElasticSearch);
+        CompletableFuture.allOf(sqlFuture, openAiTravelFuture).join();
     }
 
 
@@ -60,5 +63,20 @@ public class TravelServiceImpl implements TravelService {
         travel.setActive(true);
         travel.setCreatedAt(LocalDateTime.now());
         return travel;
+    }
+
+    private void saveInSql(User user, Travel travel) {
+        user.getTravels().add(travel);
+        travelRepository.save(travel);
+        userRepository.save(user);
+    }
+
+    private void sendToElasticSearch(JsonTravelResponse jsonTravelResponse) {
+        // TODO
+    }
+
+    private JsonTravelResponse sendTravelToOpenAiApi(Travel travel) {
+        // TODO
+        return new JsonTravelResponse();
     }
 }
