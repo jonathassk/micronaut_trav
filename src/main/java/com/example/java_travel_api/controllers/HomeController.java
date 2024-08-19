@@ -4,15 +4,19 @@ import com.example.java_travel_api.model.User;
 import com.example.java_travel_api.model.register.RegisterReturn;
 import com.example.java_travel_api.model.travel.Section;
 import com.example.java_travel_api.repository.SectionTravelRepository;
+import com.example.java_travel_api.utils.GetPromptAi;
 import com.example.java_travel_api.utils.OpenAiRequests;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import software.amazon.awssdk.services.dynamodb.model.Get;
 
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.Queue;
 
 @RestController
 @RequestMapping("/test")
@@ -28,8 +32,13 @@ public class HomeController {
 
     @GetMapping("/test")
     public void test() throws UnsupportedEncodingException, JsonProcessingException {
-        openAiRequests.sendRequestOpenAi("me responda que versão do openAi estou usando");
-        // sectionTravelRepository.save(new Section(1L, LocalDate.now(), LocalDate.now(), "New York", "USA", 2));
+        Queue<String> infoTravel = new LinkedList<>();
+        infoTravel.add("1");
+        infoTravel.add("Paris");
+        infoTravel.add("11/10/2024");
+        infoTravel.add("12/10/2024");
+        infoTravel.add("50");
+        String getPromptAi = new GetPromptAi().getPromptText(infoTravel);
     }
 
     @GetMapping("/test2")

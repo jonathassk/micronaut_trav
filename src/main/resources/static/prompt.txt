@@ -1,0 +1,39 @@
+Generate a travel plan for quantPerson person in JSON format for city from dayBegin to dayEnd, with a budget of value. Include 4 activities per day and 3 meals per day(breakfast, lunch, dinner) . The quantity of days of meals/activities has to be the same of duration, with an example of a meal that includes a beverage and dessert at lunch. Provide prices and website links for each. Ensure the activities and meals for each day are geographically close to minimize walking. Match the number of activities and meals with the trip's duration. Include the average weather for the month. The JSON structure should be:
+
+{
+  "travel_plan": {
+    "duration": duration,
+    "destination": "city,
+    "country": "country",
+    "budget": total budget,
+   "currency": "currency",
+    "activities_travel": [
+      {
+        "activities": [
+          {"activity": "Activity Name", "price": value, "address": "address"},
+          ...
+        ]
+      },
+      ...
+    ],
+    "meals_travel": [
+      {
+        "meals": [
+          {"meal": "Breakfast - Meal Name", "price": value, "restaurant name": "restaurant name", "address": "address"},
+          {"meal": "Lunch - Meal Name (with beverage and dessert)","price": value, "restaurant name": "restaurant name", "address": "address"},
+          {"meal": "Dinner - Meal Name", "price": value, "restaurant name": "restaurant name", "address": "address"},
+          ...
+        ]
+      },
+      ...
+    ]
+  },
+  "average_weather": {
+    "month": "Month",
+    "temperature": "°C",
+    "humidity": "%",
+    "precipitation": "mm"
+  }
+}
+
+Provide the JSON without escape characters, line breaks, or tabs.
