@@ -33,3 +33,6 @@ build/
 .vscode/
 
 .env
+
+##prompt
+!**/src/main/resources/static/prompt.txt
