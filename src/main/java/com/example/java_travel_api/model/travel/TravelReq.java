@@ -9,10 +9,12 @@ public record TravelReq(
         int quantityPerson,
         List<Section> sections,
         boolean flightIncluded,
+        String origin,
         List<Flight> flight,
         boolean hotelIncluded,
         List<Hotel> hotel,
         double budget,
         String currency,
+        boolean isTwoWay,
         LocalDate dayStart,
         LocalDate dayReturn) {}

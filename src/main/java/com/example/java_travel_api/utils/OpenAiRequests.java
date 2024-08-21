@@ -1,7 +1,9 @@
 package com.example.java_travel_api.utils;
 
 import com.example.java_travel_api.config.OpenAiConfig;
+import com.example.java_travel_api.model.openai.OpenAiResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -12,10 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class OpenAiRequests {
@@ -29,28 +28,28 @@ public class OpenAiRequests {
         this.openai = openai;
     }
 
-    public void sendRequestOpenAi(String text) throws JsonProcessingException {
+    public OpenAiResponse sendRequestOpenAi(Queue<String> travelData) throws JsonProcessingException {
         try (CloseableHttpClient httpClient = openai.httpClient()) {
+            String text = new GetPromptAi().getPromptText(travelData);
             ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             HttpPost httpPost = configMessageRequest(text, objectMapper);
 
             CloseableHttpResponse response = httpClient.execute(httpPost);
             int statusCode = response.getStatusLine().getStatusCode();
             String responseBody = EntityUtils.toString(response.getEntity(), "UTF-8");
+
             System.out.println("response body" + responseBody);
             if (statusCode == 200) {
-                Map<String, Object> responseMap = objectMapper.readValue(responseBody, Map.class);
-                List<Map<String, Object>> choices = (List<Map<String, Object>>) responseMap.get("choices");
-                if (choices != null && !choices.isEmpty()) {
-                    String gptResponse = (String) choices.get(0).get("text");
-                    System.out.println("Resposta GPT-4: " + gptResponse);
-                }
+                OpenAiResponse openAiResponse = objectMapper.readValue(responseBody, OpenAiResponse.class);
+                return openAiResponse;
             } else {
                 System.out.println("Erro: " + statusCode);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
 
     private HttpPost configMessageRequest(String content, ObjectMapper objectMapper) throws JsonProcessingException {
@@ -62,7 +61,7 @@ public class OpenAiRequests {
         List<Map<String, String>> messages = new ArrayList<>();
         Map<String, String> message = new HashMap<>();
         message.put("role", "user");
-        message.put("content", "ola, bom dia, apenas um teste");
+        message.put("content", content);
         messages.add(message);
 
         requestBody.put("messages", messages);

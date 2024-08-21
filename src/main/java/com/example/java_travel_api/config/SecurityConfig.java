@@ -23,7 +23,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/guests/**").permitAll()
                     .requestMatchers("/test/**").permitAll()
-                    .anyRequest().authenticated())
+                    .anyRequest().permitAll())
             .oauth2Login(Customizer.withDefaults())
             .formLogin(Customizer.withDefaults())
             .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))

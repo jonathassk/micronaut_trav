@@ -32,6 +32,8 @@ public class Travel {
 
     @Column
     private boolean flightIncluded;
+    @Column
+    private String origin;
 
     @Column
     private boolean hotelIncluded;
@@ -47,6 +49,9 @@ public class Travel {
 
     @Column
     private LocalDate dayReturn;
+
+    @Column
+    private boolean isTwoWay;
 
     @Column
     private boolean active;
