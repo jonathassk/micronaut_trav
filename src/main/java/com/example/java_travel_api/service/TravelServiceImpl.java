@@ -3,6 +3,7 @@ package com.example.java_travel_api.service;
 import com.example.java_travel_api.interfaces.TravelService;
 import com.example.java_travel_api.model.Travel;
 import com.example.java_travel_api.model.User;
+import com.example.java_travel_api.model.openai.OpenAiResponse;
 import com.example.java_travel_api.model.travel.JsonTravelResponse;
 import com.example.java_travel_api.model.travel.TravelReq;
 import com.example.java_travel_api.repository.TravelRepository;
@@ -34,13 +35,7 @@ public class TravelServiceImpl implements TravelService {
         Travel travel = createTravelObj(travelReq, user);
         // futuramente dividir em metodos de viagem unica e multiviagens
 
-        CompletableFuture<JsonTravelResponse> openAiTravelFuture = CompletableFuture.supplyAsync(() -> {
-            try {
-                return sendTravelToOpenAiApi(travelReq);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        CompletableFuture<OpenAiResponse> openAiTravelFuture = CompletableFuture.supplyAsync(() -> sendTravelToOpenAiApi(travelReq));
         openAiTravelFuture.thenAccept(this::sendToElasticSearch);
         CompletableFuture<Void> sqlFuture = CompletableFuture.runAsync(() -> saveInSql(user, travel));
         CompletableFuture.allOf(sqlFuture, openAiTravelFuture).join();
@@ -82,11 +77,11 @@ public class TravelServiceImpl implements TravelService {
         userRepository.save(user);
     }
 
-    private void sendToElasticSearch(JsonTravelResponse jsonTravelResponse) {
+    private void sendToElasticSearch(OpenAiResponse jsonTravelResponse) {
         // TODO
     }
 
-    private JsonTravelResponse sendTravelToOpenAiApi(TravelReq travel) throws JsonProcessingException {
+    private OpenAiResponse sendTravelToOpenAiApi(TravelReq travel) {
         Queue<String> travelInfo = new LinkedList<>();
         travelInfo.add(String.valueOf(travel.quantityPerson()));
         travelInfo.add(travel.sections().getFirst().getCity());
@@ -94,7 +89,6 @@ public class TravelServiceImpl implements TravelService {
         travelInfo.add(travel.dayReturn().toString());
         travelInfo.add(String.valueOf(travel.budget()));
 
-        openAiRequests.sendRequestOpenAi(travelInfo);
-        return null;
+        return openAiRequests.sendRequestOpenAi(travelInfo);
     }
 }

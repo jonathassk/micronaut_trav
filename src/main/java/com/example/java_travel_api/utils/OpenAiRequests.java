@@ -28,7 +28,7 @@ public class OpenAiRequests {
         this.openai = openai;
     }
 
-    public OpenAiResponse sendRequestOpenAi(Queue<String> travelData) throws JsonProcessingException {
+    public OpenAiResponse sendRequestOpenAi(Queue<String> travelData) {
         try (CloseableHttpClient httpClient = openai.httpClient()) {
             String text = new GetPromptAi().getPromptText(travelData);
             ObjectMapper objectMapper = new ObjectMapper();
@@ -39,7 +39,6 @@ public class OpenAiRequests {
             int statusCode = response.getStatusLine().getStatusCode();
             String responseBody = EntityUtils.toString(response.getEntity(), "UTF-8");
 
-            System.out.println("response body" + responseBody);
             if (statusCode == 200) {
                 OpenAiResponse openAiResponse = objectMapper.readValue(responseBody, OpenAiResponse.class);
                 return openAiResponse;
