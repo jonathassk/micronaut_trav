@@ -1,9 +1,7 @@
 package com.example.java_travel_api.model.travel;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
+import com.example.java_travel_api.utils.dynamoDbConverters.SectionListConverter;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -17,14 +15,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@DynamoDBDocument
+@DynamoDBTable(tableName = "travel_dynamo")
 public class TravelPlan {
+    @DynamoDBHashKey
+    private Long sectionId;
 
-    private Long id;
-    private int duration;
-    private String destination;
-    private String country;
-    private double budget;
-    private String currency;
-    private String average_weather;
+    @DynamoDBAttribute
+    List<Long> userList;
+
+    @DynamoDBAttribute
+    @DynamoDBTypeConverted(converter = SectionListConverter.class)
+    List<Section> section;
 }

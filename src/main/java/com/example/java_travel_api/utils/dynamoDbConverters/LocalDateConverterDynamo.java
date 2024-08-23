@@ -1,4 +1,4 @@
-package com.example.java_travel_api.utils;
+package com.example.java_travel_api.utils.dynamoDbConverters;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverter;
 

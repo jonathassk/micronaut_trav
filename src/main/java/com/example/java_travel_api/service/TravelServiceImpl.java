@@ -4,17 +4,17 @@ import com.example.java_travel_api.interfaces.TravelService;
 import com.example.java_travel_api.model.Travel;
 import com.example.java_travel_api.model.User;
 import com.example.java_travel_api.model.openai.OpenAiResponse;
-import com.example.java_travel_api.model.travel.JsonTravelResponse;
 import com.example.java_travel_api.model.travel.TravelReq;
 import com.example.java_travel_api.repository.TravelRepository;
 import com.example.java_travel_api.repository.UserRepository;
 import com.example.java_travel_api.utils.OpenAiRequests;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -36,12 +36,10 @@ public class TravelServiceImpl implements TravelService {
         // futuramente dividir em metodos de viagem unica e multiviagens
 
         CompletableFuture<OpenAiResponse> openAiTravelFuture = CompletableFuture.supplyAsync(() -> sendTravelToOpenAiApi(travelReq));
-        openAiTravelFuture.thenAccept(this::sendToElasticSearch);
+        openAiTravelFuture.thenAccept(openAiResponse -> sendToElasticSearch(openAiResponse, travelReq));
         CompletableFuture<Void> sqlFuture = CompletableFuture.runAsync(() -> saveInSql(user, travel));
         CompletableFuture.allOf(sqlFuture, openAiTravelFuture).join();
     }
-
-
 
     @Override
     public void includeTraveler(Travel travel, User admTraveler, String travelerId) {
@@ -77,7 +75,7 @@ public class TravelServiceImpl implements TravelService {
         userRepository.save(user);
     }
 
-    private void sendToElasticSearch(OpenAiResponse jsonTravelResponse) {
+    private void sendToElasticSearch(OpenAiResponse jsonTravelResponse, TravelReq travelReq) {
         // TODO
     }
 

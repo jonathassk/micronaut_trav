@@ -2,9 +2,8 @@ package com.example.java_travel_api.repository;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.example.java_travel_api.model.travel.Section;
-import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
+import com.example.java_travel_api.model.travel.TravelPlan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -17,12 +16,13 @@ public class SectionTravelRepository {
         this.dynamoDBMapper = dynamoDBMapper;
     }
 
-    public void save(Section section) {
+    public void save(TravelPlan section) {
         dynamoDBMapper.save(section);
     }
 
-    public Section findById(Long id) {
-        return dynamoDBMapper.load(Section.class, id);
+    public TravelPlan findById(Long id) {
+        TravelPlan result = dynamoDBMapper.load(TravelPlan.class, id);
+        return result;
     }
 
 }
