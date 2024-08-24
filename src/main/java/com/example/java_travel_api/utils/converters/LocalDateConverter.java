@@ -1,10 +1,10 @@
-package com.example.java_travel_api.utils.dynamoDbConverters;
+package com.example.java_travel_api.utils.converters;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverter;
 
 import java.time.LocalDate;
 
-public class LocalDateConverterDynamo implements DynamoDBTypeConverter<String, LocalDate> {
+public class LocalDateConverter implements DynamoDBTypeConverter<String, LocalDate> {
     @Override
     public String convert(LocalDate localDate) {
         return localDate.toString();

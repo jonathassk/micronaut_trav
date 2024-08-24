@@ -1,22 +1,40 @@
 package com.example.java_travel_api.model.travel;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
+import com.example.java_travel_api.utils.converters.LocalDateTimeConverter;
+import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public record Flight(
-       LocalDateTime departure,
-        LocalDateTime arrival,
-        String origin,
-        String destination,
-        String airline,
-        String flightNumber,
-        String seatClass,
-        double price,
-        LocalDate returnDateDeparture,
-        LocalDate returnDateArraival) {
+@Getter
+@Setter
+@NoArgsConstructor(force = true)
+@AllArgsConstructor
+@Builder
+public class Flight {
+
+    @DynamoDBAttribute
+    @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
+    private LocalDateTime dateTimeDeparture;
+    @DynamoDBAttribute
+    private LocalDateTime dateTimeArrival;
+    @DynamoDBAttribute
+    private String origin;
+    @DynamoDBAttribute
+    private String destination;
+    @DynamoDBAttribute
+    private String airline;
+    @DynamoDBAttribute
+    private String flightNumber;
+    @DynamoDBAttribute
+    private String seatClass;
+    @DynamoDBAttribute
+    private double price;
+    @DynamoDBAttribute
+    @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
+    private LocalDateTime returnDateTimeDeparture;
+    @DynamoDBAttribute
+    @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
+    private LocalDateTime returnDateTimeArrival;
 }

@@ -2,10 +2,12 @@ package com.example.java_travel_api.model.travel;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
-import com.example.java_travel_api.utils.dynamoDbConverters.LocalDateConverterDynamo;
+import com.example.java_travel_api.utils.converters.FlightConverter;
+import com.example.java_travel_api.utils.converters.LocalDateConverter;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,11 +16,11 @@ import java.time.LocalDate;
 @Builder
 public class Section {
     @DynamoDBAttribute
-    @DynamoDBTypeConverted(converter = LocalDateConverterDynamo.class)
+    @DynamoDBTypeConverted(converter = LocalDateConverter.class)
     private LocalDate dayStart;
 
     @DynamoDBAttribute
-    @DynamoDBTypeConverted(converter = LocalDateConverterDynamo.class)
+    @DynamoDBTypeConverted(converter = LocalDateConverter.class)
     private LocalDate dayEnd;
 
     @DynamoDBAttribute
@@ -30,4 +32,7 @@ public class Section {
     @DynamoDBAttribute
     private int quantityDailyActivities;
 
+    @DynamoDBAttribute
+    @DynamoDBTypeConverted(converter = FlightConverter.class)
+    private List<Flight> flights;
 }
