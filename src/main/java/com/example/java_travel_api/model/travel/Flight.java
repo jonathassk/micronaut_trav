@@ -20,7 +20,7 @@ public class Flight {
     @DynamoDBAttribute
     private LocalDateTime dateTimeArrival;
     @DynamoDBAttribute
-    private String origin;
+    private String origin; // origem e destino serao definidos codigo do aeroporto
     @DynamoDBAttribute
     private String destination;
     @DynamoDBAttribute

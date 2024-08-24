@@ -1,10 +1,12 @@
 package com.example.java_travel_api.controllers;
 
 import com.example.java_travel_api.model.travel.Flight;
+import com.example.java_travel_api.model.travel.Hotel;
 import com.example.java_travel_api.model.travel.Section;
 import com.example.java_travel_api.model.travel.TravelPlan;
 import com.example.java_travel_api.repository.SectionTravelRepository;
 import com.example.java_travel_api.utils.OpenAiRequests;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +29,15 @@ public class HomeController {
 
     @GetMapping("/test")
     public void test() {
+
+        Hotel hotel = Hotel.builder()
+            .name("Hotel Test")
+            .address("Test Address")
+            .city("Buenos Aires")
+            .country("Argentina")
+            .price(100)
+            .build();
+
         Flight flight = Flight.builder()
             .airline("Aerolineas Argentinas")
             .flightNumber("AR123")
@@ -47,6 +58,7 @@ public class HomeController {
                 .country("Argentina")
                 .quantityDailyActivities(3)
                 .flights(List.of(flight))
+                .hotels(List.of(hotel))
                 .build();
 
         TravelPlan test = TravelPlan.builder()
@@ -58,7 +70,7 @@ public class HomeController {
     }
 
     @GetMapping("/test2")
-    public void test2() {
-        System.out.println(sectionTravelRepository.findById(1L).getSection());
+    public ResponseEntity<TravelPlan> test2() {
+        return ResponseEntity.ok(sectionTravelRepository.findById(1L));
     }
 }

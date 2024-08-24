@@ -1,7 +1,6 @@
 package com.example.java_travel_api.repository;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.example.java_travel_api.model.travel.Section;
 import com.example.java_travel_api.model.travel.TravelPlan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,8 +20,7 @@ public class SectionTravelRepository {
     }
 
     public TravelPlan findById(Long id) {
-        TravelPlan result = dynamoDBMapper.load(TravelPlan.class, id);
-        return result;
+        return dynamoDBMapper.load(TravelPlan.class, id);
     }
 
 }

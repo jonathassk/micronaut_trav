@@ -20,6 +20,5 @@ public class Hotel {
     @DynamoDBAttribute
     private String address;
     @DynamoDBAttribute
-    @DynamoDBTypeConverted(converter = DoubleConverter.class)
-    private Double price;
+    private double price;
 }

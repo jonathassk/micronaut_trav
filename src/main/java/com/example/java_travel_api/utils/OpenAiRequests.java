@@ -40,8 +40,7 @@ public class OpenAiRequests {
             String responseBody = EntityUtils.toString(response.getEntity(), "UTF-8");
 
             if (statusCode == 200) {
-                OpenAiResponse openAiResponse = objectMapper.readValue(responseBody, OpenAiResponse.class);
-                return openAiResponse;
+                return objectMapper.readValue(responseBody, OpenAiResponse.class);
             } else {
                 System.out.println("Erro: " + statusCode);
             }
