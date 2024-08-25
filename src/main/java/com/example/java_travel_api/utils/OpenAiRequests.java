@@ -28,7 +28,7 @@ public class OpenAiRequests {
         this.openai = openai;
     }
 
-    public OpenAiResponse sendRequestOpenAi(Queue<String> travelData) {
+    public String sendRequestOpenAi(Queue<String> travelData) {
         try (CloseableHttpClient httpClient = openai.httpClient()) {
             String text = new GetPromptAi().getPromptText(travelData);
             ObjectMapper objectMapper = new ObjectMapper();
@@ -40,7 +40,8 @@ public class OpenAiRequests {
             String responseBody = EntityUtils.toString(response.getEntity(), "UTF-8");
 
             if (statusCode == 200) {
-                return objectMapper.readValue(responseBody, OpenAiResponse.class);
+                System.out.println(responseBody);
+                return objectMapper.readValue(responseBody, OpenAiResponse.class).choices().get(0).message().content();
             } else {
                 System.out.println("Erro: " + statusCode);
             }

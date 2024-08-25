@@ -35,7 +35,7 @@ public class TravelServiceImpl implements TravelService {
         Travel travel = createTravelObj(travelReq, user);
         // futuramente dividir em metodos de viagem unica e multiviagens
 
-        CompletableFuture<OpenAiResponse> openAiTravelFuture = CompletableFuture.supplyAsync(() -> sendTravelToOpenAiApi(travelReq));
+        CompletableFuture<String> openAiTravelFuture = CompletableFuture.supplyAsync(() -> sendTravelToOpenAiApi(travelReq));
         openAiTravelFuture.thenAccept(openAiResponse -> sendToElasticSearch(openAiResponse, travelReq));
         CompletableFuture<Void> sqlFuture = CompletableFuture.runAsync(() -> saveInSql(user, travel));
         CompletableFuture.allOf(sqlFuture, openAiTravelFuture).join();
@@ -75,11 +75,11 @@ public class TravelServiceImpl implements TravelService {
         userRepository.save(user);
     }
 
-    private void sendToElasticSearch(OpenAiResponse jsonTravelResponse, TravelReq travelReq) {
-        // TODO
+    private void sendToElasticSearch(String jsonTravelResponse, TravelReq travelReq) {
+
     }
 
-    private OpenAiResponse sendTravelToOpenAiApi(TravelReq travel) {
+    private String sendTravelToOpenAiApi(TravelReq travel) {
         Queue<String> travelInfo = new LinkedList<>();
         travelInfo.add(String.valueOf(travel.quantityPerson()));
         travelInfo.add(travel.sections().getFirst().getCity());

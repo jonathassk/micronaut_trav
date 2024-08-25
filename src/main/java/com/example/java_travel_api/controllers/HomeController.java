@@ -1,9 +1,6 @@
 package com.example.java_travel_api.controllers;
 
-import com.example.java_travel_api.model.travel.Flight;
-import com.example.java_travel_api.model.travel.Hotel;
-import com.example.java_travel_api.model.travel.Section;
-import com.example.java_travel_api.model.travel.TravelPlan;
+import com.example.java_travel_api.model.travel.*;
 import com.example.java_travel_api.repository.SectionTravelRepository;
 import com.example.java_travel_api.utils.OpenAiRequests;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +26,23 @@ public class HomeController {
 
     @GetMapping("/test")
     public void test() {
+
+        Activities activity = Activities.builder()
+                .activity("Test Activity")
+                .price(100)
+                .address("Test Address")
+                .build();
+
+        Activities activity2 = Activities.builder()
+                .activity("Test Activity 2")
+                .price(200)
+                .address("Test Address 2")
+                .build();
+
+        ActivitiesTravel activitiesTravel = ActivitiesTravel.builder()
+                .activities(List.of(activity, activity2))
+                .build();
+
 
         Hotel hotel = Hotel.builder()
             .name("Hotel Test")
@@ -59,6 +73,7 @@ public class HomeController {
                 .quantityDailyActivities(3)
                 .flights(List.of(flight))
                 .hotels(List.of(hotel))
+                .activitiesTravel(List.of(activitiesTravel))
                 .build();
 
         TravelPlan test = TravelPlan.builder()
@@ -73,4 +88,5 @@ public class HomeController {
     public ResponseEntity<TravelPlan> test2() {
         return ResponseEntity.ok(sectionTravelRepository.findById(1L));
     }
+
 }
